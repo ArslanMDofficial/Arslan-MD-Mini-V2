@@ -566,11 +566,6 @@ async function startBot(number) {
     }
 }
          
-        // 10. ANTIDELETE
-        conn.ev.on('messages.update', async (updates) => {
-            await handleAntidelete(conn, updates, store);
-        });
-        
         // ===============================================================
         // 📥 MESSAGE HANDLER (UPSERT) AVEC CONFIG MONGODB
         // ===============================================================
