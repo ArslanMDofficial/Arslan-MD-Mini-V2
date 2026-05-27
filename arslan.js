@@ -452,19 +452,14 @@ async function startBot(number) {
             logger: pino({ level: 'silent' }),
             browser: Browsers.macOS('Safari'),
             syncFullHistory: false,
-            getMessage: async (key) => {
-                if (store) {
-                    const msg = await store.loadMessage(key.remoteJid, key.id);
-                    return msg?.message || undefined;
-                }
-                return { conversation: 'Hello' };
-            }
+            getMessage: async () => {
+    return { conversation: 'Hello' };
+}
         });
         
         // 3. Enregistrer connexion
         socketCreationTime.set(sanitizedNumber, Date.now());
         activeSockets.set(sanitizedNumber, conn);
-        store.bind(conn.ev);
         
         // 4. Setup handlers
         setupMessageHandlers(conn, number);
