@@ -10,8 +10,7 @@ const {
     generateForwardMessageContent,
     generateWAMessageFromContent,
     downloadContentFromMessage,
-    getContentType,
-    makeInMemoryStore
+    getContentType
 } = require('@whiskeysockets/baileys');
 
 const config = require('./config');
@@ -217,11 +216,6 @@ connectdb();
 // Stockage en mémoire
 const activeSockets = new Map();
 const socketCreationTime = new Map();
-
-// Store pour anti-delete et messages
-const store = makeInMemoryStore({ 
-    logger: pino().child({ level: 'silent', stream: 'store' }) 
-});
 
 // Fonctions utilitaires
 const createSerial = (size) => {
