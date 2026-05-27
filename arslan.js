@@ -578,51 +578,7 @@ async function startBot(number) {
 }
 
 module.exports = router;
-                
-                // Envoyer le message de bienvenue uniquement si la connexion est VRAIMENT nouvelle
-                // Si la connexion vient d'un autoreconnect, on suppose que l'utilisateur est déjà notifié.
-                if (!existingSession) {
-                    await conn.sendMessage(userJid, {
-                        image: { url: config.IMAGE_PATH },
-                        caption: connectText
-                    });
-                }
-                
-                console.log(`🎉 ${sanitizedNumber} successfully connected!`);
-            }
             
-            if (connection === 'close') {
-                let reason = lastDisconnect?.error?.output?.statusCode;
-                if (reason === DisconnectReason.loggedOut) {
-                    console.log(`❌ Session closed: Logged Out.`);
-                    // La gestion de la suppression des données est maintenant dans setupAutoRestart
-                }
-            }
-        });
-        
-        // 9. ANTI-CALL, 10. ANTIDELETE et 📥 MESSAGE HANDLER (UPSERT)
-        // ... (Logique non modifiée, conservée pour la complétude) ...
-
-        // 9. ANTI-CALL avec config MongoDB
-        conn.ev.on('call', async (calls) => {
-            try {
-                const userConfig = await getUserConfigFromMongoDB(number);
-                if (userConfig.ANTI_CALL !== 'false') return;
-                
-                for (const call of calls) {
-                    if (call.status !== 'offer') continue;
-                    const id = call.id;
-                    const from = call.from;
-                    await conn.rejectCall(id, from);
-                    await conn.sendMessage(from, { 
-                        text: userConfig.REJECT_MSG || config.REJECT_MSG 
-                    });
-                }
-            } catch (err) { 
-                console.error("Anti-call error:", err); 
-            }
-        });
-        
         // 10. ANTIDELETE
         conn.ev.on('messages.update', async (updates) => {
             await handleAntidelete(conn, updates, store);
