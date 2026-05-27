@@ -573,8 +573,16 @@ router.get('/', (req, res) => res.sendFile(path.join(__dirname, 'pair.html')));
 
 router.get('/code', async (req, res) => {
     const number = req.query.number;
-    if (!number) return res.json({ error: 'Number required' });
-    await startBot(number, res);
+
+    if (!number) {
+        return res.json({
+            error: 'Number required'
+        });
+    }
+
+    const result = await startBot(number);
+
+    return res.json(result);
 });
 
 // Route pour vérifier statut
