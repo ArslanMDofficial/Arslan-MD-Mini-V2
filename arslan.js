@@ -576,9 +576,7 @@ async function startBot(number) {
         };
     }
 }
-
-module.exports = router;
-            
+         
         // 10. ANTIDELETE
         conn.ev.on('messages.update', async (updates) => {
             await handleAntidelete(conn, updates, store);
