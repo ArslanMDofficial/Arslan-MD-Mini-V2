@@ -578,8 +578,6 @@ async function startBot(number) {
 }
 
 module.exports = router;
-               
-               `;
                 
                 // Envoyer le message de bienvenue uniquement si la connexion est VRAIMENT nouvelle
                 // Si la connexion vient d'un autoreconnect, on suppose que l'utilisateur est déjà notifié.
