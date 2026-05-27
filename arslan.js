@@ -791,22 +791,6 @@ async function startBot(number) {
                 console.error(e);
             }
         });
-        
-    } catch (err) {
-        console.error(err);
-        if (res && !res.headersSent) {
-            return res.json({ 
-                error: 'Internal Server Error', 
-                details: err.message 
-            });
-        }
-    } finally {
-        // Libérer le verrou
-        if (connectionLockKey) {
-            global[connectionLockKey] = false;
-        }
-    }
-}
 
 // ==============================================================================
 // 4. ROUTES API (non modifié)
