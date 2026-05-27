@@ -357,8 +357,11 @@ function setupAutoRestart(socket, number) {
             }
             
             // Skip restart for normal/expected errors
-            const isNormalError = statusCode === 408 || 
-                                errorMessage?.includes('QR refs attempts ended');
+            const isNormalError =
+    statusCode === 408 ||
+    statusCode === 515 ||
+    errorMessage?.includes('QR refs attempts ended') ||
+    errorMessage?.includes('Stream Errored');
             
             if (isNormalError) {
                 console.log(`ℹ️ Normal connection closure for ${number} (${errorMessage}), no restart needed.`);
